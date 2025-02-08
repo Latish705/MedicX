@@ -3,7 +3,7 @@ import { useState } from "react"; // Fixed import
 import axios from "axios"; // Correct i
 import { useRouter } from "next/navigation"; // Fixed import
 import { getCurrentUserToken, signInWithGoogle } from "../../../utils/firebase";
-import { BackendUrl } from "../../page"
+import { BackendUrl } from "../../../utils/constants";
 
 export default function LoginPage() {
   const [activeTab, setActiveTab] = useState<"user" | "startup">("user");
