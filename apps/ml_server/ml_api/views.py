@@ -29,6 +29,7 @@ nlp = load_local_spacy_model('ml_api/en_core_sci_scibert-0.5.4.tar.gz')
 # Define medical history
 medical_history = {
     "age": 45,
+    
     "pre_existing_conditions": ["Type 2 Diabetes", "Hypertension"],
     "allergies": ["Penicillin", "Aspirin"],
     "medications": {
