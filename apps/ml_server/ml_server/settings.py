@@ -25,7 +25,10 @@ SECRET_KEY = "django-insecure-xwbeo9kr$y*2(qp-4mzr6a%5=o*8&@fhe50q6v35pv_a^^!h+-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'medinosxadvitiya-25-codingknights-1.onrender.com',
+    'https://medinosxadvitiya-25-codingknights.onrender.com',
+]
 
 
 # Application definition
