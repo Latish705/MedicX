@@ -87,7 +87,6 @@ def ocr(request):
             medications = extract_medications(raw_text, nlp)
             return JsonResponse({
                 "status": "processed",
-                "raw_text": raw_text,
                 "medications": medications
             })
         else:
