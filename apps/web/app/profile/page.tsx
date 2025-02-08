@@ -1,9 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCurrentUserToken } from "../../utils/firebase";
 
 const ProfilePage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  
 
   const user = {
     name: "John Doe",
@@ -15,6 +18,22 @@ const ProfilePage = () => {
     aadhaar: "1234-5678-9012",
     photoURL: "https://api.dicebear.com/6.x/initials/svg?seed=John%20Doe",
   };
+
+
+  const getUserDetails = async () => {
+    try {
+      const res = await getCurrentUserToken();
+      console.log("res",res);
+    } catch (error) {
+      console.error("Error fetching user token:", error);
+    }
+  };
+  
+  useEffect(() => {
+    getUserDetails();
+  }, []);
+  
+
 
   return (
     <div className="h-screen flex ">

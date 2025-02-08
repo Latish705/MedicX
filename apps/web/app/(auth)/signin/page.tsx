@@ -131,7 +131,7 @@ export default function LoginPage() {
       <div className="w-full md:w-1/2 bg-blue-600 text-white flex flex-col items-center justify-center p-8">
         <h1 className="text-3xl md:text-4xl font-semibold mb-4">Welcome to Our Platform</h1>
         <p className="text-lg mb-6 text-center">
-          Upload your prescription document and get AI-generated **medicine suggestions, alternate brands, dosage recommendations,**
+          Upload your prescription document and get AI-generated <span className=" font-bold">medicine suggestions, alternate brands, dosage recommendations, </span>
           and more! Our intelligent system helps you make informed health decisions with ease.
         </p>
         <button
