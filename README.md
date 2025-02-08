@@ -1,6 +1,6 @@
 # MedinosXAdvitiya-25_CodingKnights
 
-Welcome to the **MedinosXAdvitiya-25_CodingKnights** repository! This project is structured as a monorepo using [Turborepo](https://turbo.build/), facilitating efficient management of multiple packages and applications within a single repository.
+Welcome to the **MedinosXAdvitiya-25_CodingKnights** repository! 
 
 ## Getting Started
 
