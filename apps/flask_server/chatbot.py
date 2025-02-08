@@ -5,6 +5,8 @@ from pydantic import BaseModel
 from langchain_groq import ChatGroq
 from langchain_core.prompts import PromptTemplate
 from dotenv import load_dotenv
+import json
+
 
 # Load environment variables
 load_dotenv()
@@ -85,7 +87,7 @@ async def assess_symptoms(input_data: SymptomInput):
         cleaned_symptoms = clean_text(input_data.symptoms)
 
         chain = prompt | llm
-        response = chain.invoke({"symptoms": cleaned_symptoms, "medical_history": {medical_history}})  
+        response = chain.invoke({"symptoms": cleaned_symptoms, "medical_history": json.dumps(medical_history)})  
         return {"advice": response.content}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
