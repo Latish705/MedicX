@@ -75,3 +75,7 @@ https://allenai.github.io/scispacy/
 4. Backend Server - Nodejs(typescript)
 5. Frontend - Nextjs
 6. 
+
+Live Deployment
+
+Web App: https://medinos-x-advitiya-25-coding-knights-web-8du8.vercel.app/
