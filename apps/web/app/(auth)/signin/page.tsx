@@ -37,7 +37,7 @@ export default function LoginPage() {
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
-      await signInWithGoogle(); 
+      await signInWithGoogle();
       checkFirstTimeLogin(); // Redirect after Google login
     } catch (error) {
       console.error("Error during Google login:", error);
@@ -63,21 +63,19 @@ export default function LoginPage() {
 
           <div className="flex space-x-2 mb-6">
             <button
-              className={`w-1/2 py-2 rounded-md font-medium transition ${
-                activeTab === "user"
+              className={`w-1/2 py-2 rounded-md font-medium transition ${activeTab === "user"
                   ? "bg-blue-600 text-white shadow-md"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+                }`}
               onClick={() => setActiveTab("user")}
             >
               User
             </button>
             <button
-              className={`w-1/2 py-2 rounded-md font-medium transition ${
-                activeTab === "startup"
+              className={`w-1/2 py-2 rounded-md font-medium transition ${activeTab === "startup"
                   ? "bg-blue-600 text-white shadow-md"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+                }`}
               onClick={() => setActiveTab("startup")}
             >
               Startup
@@ -133,9 +131,9 @@ export default function LoginPage() {
       <div className="w-full md:w-1/2 bg-blue-600 text-white flex flex-col items-center justify-center p-8">
         <h1 className="text-3xl md:text-4xl font-semibold mb-4">Welcome to Our Platform</h1>
         <p className="text-lg mb-6 text-center">
-    Upload your prescription document and get AI-generated **medicine suggestions, alternate brands, dosage recommendations,** 
-    and more! Our intelligent system helps you make informed health decisions with ease.
-  </p>
+          Upload your prescription document and get AI-generated **medicine suggestions, alternate brands, dosage recommendations,**
+          and more! Our intelligent system helps you make informed health decisions with ease.
+        </p>
         <button
           onClick={() => alert("Learn More clicked")}
           className="bg-white text-blue-600 py-2 px-6 rounded-lg font-medium shadow-md hover:bg-gray-100 transition"
