@@ -24,7 +24,7 @@ export default function LoginPage() {
         alert("First Time Login");
         router.push("/userKyc");
       } else {
-        router.push("/");
+        router.push("/profile");
       }
     } catch (error) {
       console.error("Error checking first-time login:", error);
