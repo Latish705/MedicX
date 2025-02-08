@@ -12,9 +12,10 @@ def load_local_spacy_model(tarball_path):
         os.makedirs(models_dir, exist_ok=True)
         with tarfile.open(tarball_path, 'r:gz') as tar:
             tar.extractall(path=models_dir)
-        model_path = os.path.join(models_dir, "en_core_sci_scibert-0.5.4",
-                                  "en_core_sci_scibert",
-                                  "en_core_sci_scibert-0.5.4")
+
+        model_path = os.path.join(models_dir, "en_core_sci_sm-0.5.4",
+                                  "en_core_sci_sm",
+                                  "en_core_sci_sm-0.5.4")
         print(f"Loading model from: {model_path}")
         return spacy.load(model_path)
     except Exception as e:
@@ -104,7 +105,7 @@ def extract_medications(text: str, nlp) -> List[Dict[str, str]]:
     return medications
 
 def main():
-    nlp = load_local_spacy_model('en_core_sci_scibert-0.5.4.tar.gz')
+    nlp = load_local_spacy_model('en_core_sci_sm-0.5.4.tar.gz')
     image_paths = ["computer1.png", "computer4.png"]
     for image_path in image_paths:
         raw_text = extract_text(image_path)
