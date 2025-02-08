@@ -41,6 +41,14 @@ To get started with this repository:
    ```
    npm run build
    ```
+
+### Download the Scibert model from SciSpacy from :
+``
+https://allenai.github.io/scispacy/
+``
+- put the downloaded model in the ML server folder
+
+
 ## Starting the ML server(Django Admin)
 
 1. **Install dependencies**
