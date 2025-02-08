@@ -1,12 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { useDropzone } from "react-dropzone"; // For drag-and-drop functionality
+import { useRouter } from "next/navigation"; // Import next router for navigation
 
 export default function HomePage() {
   const [prescription, setPrescription] = useState(null);
   const [chatMessages, setChatMessages] = useState([]);
   const [userMessage, setUserMessage] = useState("");
+  const router = useRouter(); // Initialize router for navigation
+
+  // Navigate to the profile page
+  const navigateToProfile = () => {
+    router.push("/profile");
+  };
 
   // Handle file drop
   // const onDrop = (acceptedFiles) => {
@@ -40,9 +46,28 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-white">
-      {/* Header */}
-      <header className="bg-white text-gray-800 p-6 text-center font-semibold text-3xl shadow-lg">
-        Prescription Upload & Chatbot
+      {/* Header with Profile Icon */}
+      <header className="bg-white text-gray-800 p-6 text-center font-semibold text-3xl shadow-lg flex justify-between items-center">
+        <span>Prescription Upload & Chatbot</span>
+        {/* Profile Icon */}
+        <div
+          onClick={navigateToProfile}
+          className="cursor-pointer text-gray-600 hover:text-blue-600 transition-all duration-300"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-8 w-8"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10 2a4 4 0 00-4 4 4 4 0 004 4 4 4 0 004-4 4 4 0 00-4-4zM5 10a5 5 0 015-5 5 5 0 015 5 5 5 0 01-5 5 5 5 0 01-5-5zm0 7a3 3 0 013-3h4a3 3 0 013 3v2H5v-2z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </div>
       </header>
 
       {/* Main content */}
