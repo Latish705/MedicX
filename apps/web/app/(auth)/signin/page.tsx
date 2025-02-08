@@ -1,12 +1,12 @@
 "use client";
-
 import { useState } from "react";
+import { signInWithGoogle } from "../../../utils/firebase.js";
 
 export default function LoginPage() {
   const [activeTab, setActiveTab] = useState<"user" | "startup">("user");
 
   const handleGoogleLogin = () => {
-    console.log("Google login clicked");
+    signInWithGoogle()
   };
 
   return (
