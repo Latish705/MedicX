@@ -12,7 +12,7 @@ def load_local_spacy_model(tarball_path):
         os.makedirs(models_dir, exist_ok=True)
         with tarfile.open(tarball_path, 'r:gz') as tar:
             tar.extractall(path=models_dir)
-
+# 
         model_path = os.path.join(models_dir, "en_core_sci_sm-0.5.4",
                                   "en_core_sci_sm",
                                   "en_core_sci_sm-0.5.4")
