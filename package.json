@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "medicx",
   "private": true,
   "scripts": {
     "build": "turbo build",
