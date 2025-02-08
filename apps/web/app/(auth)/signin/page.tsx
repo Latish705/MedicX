@@ -1,12 +1,26 @@
 "use client";
 import { useState } from "react";
-import { signInWithGoogle } from "../../../utils/firebase.js";
+import {
+  getCurrentUserToken,
+  signInWithGoogle,
+} from "../../../utils/firebase.js";
+import { AsyncCallbackSet } from "next/dist/server/lib/async-callback-set.js";
+import { headers } from "next/headers.js";
 
 export default function LoginPage() {
   const [activeTab, setActiveTab] = useState<"user" | "startup">("user");
 
+  const checkFirstTimeLogin = async () => {
+    const token = await getCurrentUserToken();
+    const res = await axios.get("/check", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
   const handleGoogleLogin = () => {
-    signInWithGoogle()
+    signInWithGoogle();
   };
 
   return (
@@ -47,7 +61,10 @@ export default function LoginPage() {
           {/* Login Form */}
           <form className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email
               </label>
               <input
@@ -59,7 +76,10 @@ export default function LoginPage() {
               />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <input
@@ -90,9 +110,13 @@ export default function LoginPage() {
 
       {/* Right Section - Appealing Info */}
       <div className="w-full md:w-1/2 bg-blue-600 text-white flex flex-col items-center justify-center p-8">
-        <h1 className="text-3xl md:text-4xl font-semibold mb-4">Welcome to Our Platform</h1>
+        <h1 className="text-3xl md:text-4xl font-semibold mb-4">
+          Welcome to Our Platform
+        </h1>
         <p className="text-lg mb-6 text-center">
-          Join thousands of startups and users who are innovating and growing with us. Whether you're a user looking to explore or a startup seeking investment, our platform connects you with the best opportunities.
+          Join thousands of startups and users who are innovating and growing
+          with us. Whether you're a user looking to explore or a startup seeking
+          investment, our platform connects you with the best opportunities.
         </p>
         <button
           onClick={() => alert("Learn More clicked")}
@@ -107,7 +131,11 @@ export default function LoginPage() {
 
 // Google SVG Icon Component
 const GoogleIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       d="M12.24 10.28c-.66-.33-1.42-.5-2.22-.5-1.71 0-3.08.89-3.08 2.02s1.37 2.02 3.08 2.02c.8 0 1.56-.17 2.22-.5l1.02 1.02c.39.39.99.59 1.61.59 1.17 0 2.11-.8 2.11-2.11 0-.8-.46-1.5-1.28-1.84zM18.32 21.34c-1.11.01-2.02-.5-2.59-1.34-.57-.84-.86-1.94-.86-3.14 0-1.17.29-2.24.86-3.14.57-.84 1.48-1.34 2.59-1.34 1.71 0 3.08.89 3.08 2.02 0 1.13-.37 2.11-1.02 2.85-.65.74-1.48 1.2-2.42 1.34z"
       fill="currentColor"

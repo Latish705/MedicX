@@ -1,5 +1,17 @@
 import { initializeApp } from "firebase/app";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  sendEmailVerification,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged,
+  setPersistence,
+  browserLocalPersistence,
+} from "firebase/auth";
 
+// Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -12,73 +24,37 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// firebase-config.js
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  GoogleAuthProvider,
-  sendEmailVerification,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged,
-  setPersistence,
-  browserLocalPersistence,
-} from "firebase/auth";
+// Firebase Auth
+const auth = getAuth(app);
+setPersistence(auth, browserLocalPersistence).catch((error) =>
+  console.error("Error setting persistence:", error)
+);
 
-// Firebase configuration, environment variables are used here for security
-
-// Initialize Firebase
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-// Initialize Firebase Auth
-export const auth = getAuth();
-
-// Set persistence to keep user logged in across sessions
-setPersistence(auth, browserLocalPersistence)
-  .then(() => {
-    console.log("Persistence set to local");
-  })
-  .catch((error) => {
-    console.error("Error setting persistence:", error);
-  });
-
-// Sign-in with Google and handle tokens
+// Google Sign-in
 export const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   try {
-    // Check if a user is already signed in
     if (auth.currentUser) {
-      await signOut(auth); // Sign-out the currently signed-in user if present
+      await signOut(auth);
     }
-
-    // Proceed with Google sign-in
     const result = await signInWithPopup(auth, provider);
-    const newUser = result.user;
-
-    // Force refresh the token to ensure it's for the new user
-    const token = await newUser.getIdToken(true);
-
-    // Firebase manages refresh tokens internally, but here's how to access it
-    //@ts-ignore
-    const refreshToken = newUser.stsTokenManager.refreshToken;
-
-    console.log("User:", newUser);
+    const token = await result.user.getIdToken(true);
+    console.log("User signed in:", result.user);
     console.log("Access Token:", token);
-    console.log("Refresh Token:", refreshToken); // Not necessary to log in production
-
-    // Return both tokens if needed
-    return { token, refreshToken };
-  } catch (error) {
-    console.error("Error during Google sign-in:", error);
-    throw new Error("Sign-in failed. Please try again.");
+    return token;
+  } catch (error: any) {
+    if (error.code === "auth/network-request-failed") {
+      console.error(
+        "Network request failed. Please check your internet connection."
+      );
+    } else {
+      console.error("Error during Google sign-in:", error.message);
+    }
+    throw error;
   }
 };
 
-// Sign up with email and password, and send email verification
+// Email Sign-up and Verification
 export const signUpAndVerifyEmail = async (email: string, password: string) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
@@ -86,62 +62,48 @@ export const signUpAndVerifyEmail = async (email: string, password: string) => {
       email,
       password
     );
-    const user = userCredential.user;
-
-    // Send verification email
-    await sendEmailVerification(user);
+    await sendEmailVerification(userCredential.user);
     console.log("Verification email sent to", email);
-
-    // Return the refresh token
-    //@ts-ignore
-    return user.stsTokenManager.refreshToken;
-  } catch (error) {
-    console.error("Error signing up:", error);
-    throw new Error("Sign-up failed. Please try again.");
+    return userCredential.user;
+  } catch (error: any) {
+    console.error("Sign-up error:", error.message);
+    throw error;
   }
 };
 
-// Check if the current user's email is verified
-export const isUserVerified = () => {
+export const getCurrentUserToken = async () => {
   const user = auth.currentUser;
   if (user) {
-    return user.emailVerified;
+    const token = await user.getIdToken();
+    console.log("Current User Token:", token);
+    return token;
+  } else {
+    console.log("No user signed in");
   }
-  return false;
 };
 
-// Firebase Auth state listener
+// Auth State Listener
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User signed in:", user);
-
-    // Get and store the fresh token whenever the auth state changes
-    user.getIdToken(true).then((newToken) => {
-      console.log("Updated Access Token:", newToken);
-      localStorage.setItem("accessToken", newToken); // Store the updated access token
-      //@ts-ignore
-      localStorage.setItem("refreshToken", user.stsTokenManager.refreshToken); // Store the updated refresh token
+    user.getIdToken(true).then((token) => {
+      console.log("Updated Access Token:", token);
     });
   } else {
     console.log("No user signed in");
   }
 });
 
-// Sign out the current user
+// Sign-out
 export const logout = async () => {
   try {
-    const currentUser = auth.currentUser;
-    console.log("Current user:", currentUser);
-
-    if (currentUser) {
-      await signOut(auth);
-      console.log("User signed out");
-    } else {
-      console.log("No user is currently signed in, cannot sign out.");
-    }
-  } catch (error) {
-    console.error("Error during sign-out:", error);
+    await signOut(auth);
+    console.log("User signed out");
+  } catch (error: any) {
+    console.error("Error signing out:", error.message);
   }
 };
 
-export default firebase;
+export default app;
+
+// app.user().
