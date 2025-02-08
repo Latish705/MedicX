@@ -41,6 +41,14 @@ To get started with this repository:
    ```
    npm run build
    ```
+
+### Download the Scibert model from SciSpacy from :
+``
+https://allenai.github.io/scispacy/
+``
+- put the downloaded model in the ML server folder
+
+
 ## Starting the ML server(Django Admin)
 
 1. **Install dependencies**
@@ -67,3 +75,7 @@ To get started with this repository:
 4. Backend Server - Nodejs(typescript)
 5. Frontend - Nextjs
 6. 
+
+Live Deployment
+
+Web App: https://medinos-x-advitiya-25-coding-knights-web-8du8.vercel.app/
