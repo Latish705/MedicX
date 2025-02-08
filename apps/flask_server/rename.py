@@ -12,7 +12,7 @@ from werkzeug.utils import secure_filename  # new import
 
 # New imports from rename.py
 from test import classify_text_image_with_tesseract
-from test2 import extract_text, extract_medications, load_local_spacy_model
+from apps.ml_server.ml_api.test2 import extract_text, extract_medications, load_local_spacy_model
 
 # Load environment variables
 load_dotenv()

@@ -71,13 +71,7 @@ def classify_text_image_with_tesseract(image_path, debug=False):
     
     return classification, round(float(stroke_width_std), 2), round(float(solidity_std), 2)
 
-if __name__ == "__main__":
-    image_path = "./digital/digital_0045.jpg"  # Adjust path as needed
-    classification, stroke, solidity = classify_text_image_with_tesseract(image_path, debug=True)
-    print(f"Image: {image_path}")
-    print(f"Classification: {classification}")
-    print(f"Stroke Width STD: {stroke}")
-    print(f"Solidity STD: {solidity}")
+
 
 
 
