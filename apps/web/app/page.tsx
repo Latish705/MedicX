@@ -4,7 +4,6 @@ import { Button } from "@repo/ui/button";
 import styles from "./page.module.css";
 
 
-export const BackendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
