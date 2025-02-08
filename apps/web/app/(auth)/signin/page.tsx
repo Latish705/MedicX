@@ -133,8 +133,9 @@ export default function LoginPage() {
       <div className="w-full md:w-1/2 bg-blue-600 text-white flex flex-col items-center justify-center p-8">
         <h1 className="text-3xl md:text-4xl font-semibold mb-4">Welcome to Our Platform</h1>
         <p className="text-lg mb-6 text-center">
-          Join thousands of startups and users who are innovating and growing with us. Whether you're a user looking to explore or a startup seeking investment, our platform connects you with the best opportunities.
-        </p>
+    Upload your prescription document and get AI-generated **medicine suggestions, alternate brands, dosage recommendations,** 
+    and more! Our intelligent system helps you make informed health decisions with ease.
+  </p>
         <button
           onClick={() => alert("Learn More clicked")}
           className="bg-white text-blue-600 py-2 px-6 rounded-lg font-medium shadow-md hover:bg-gray-100 transition"
