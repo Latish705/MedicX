@@ -4,8 +4,7 @@ import {
   getCurrentUserToken,
   signInWithGoogle,
 } from "../../../utils/firebase.js";
-import { AsyncCallbackSet } from "next/dist/server/lib/async-callback-set.js";
-import { headers } from "next/headers.js";
+import axios from "axios";
 
 export default function LoginPage() {
   const [activeTab, setActiveTab] = useState<"user" | "startup">("user");

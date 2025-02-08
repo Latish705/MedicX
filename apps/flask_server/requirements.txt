@@ -4,4 +4,3 @@ pydantic==2.9.2
 python-dotenv
 langchain-core==0.3.34
 langchain-groq==0.2.4
-

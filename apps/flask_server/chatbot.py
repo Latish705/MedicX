@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 api_key = os.getenv("GROQ_API_KEY")
 
+
 # Define medical history
 medical_history = {
     "age": 45,
