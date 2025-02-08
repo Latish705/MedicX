@@ -109,8 +109,6 @@ def main():
     image_paths = ["computer1.png", "computer4.png"]
     for image_path in image_paths:
         raw_text = extract_text(image_path)
-        print("\nExtracted Text:")
-        print(raw_text)
         medications = extract_medications(raw_text, nlp)
         print("\nExtracted Medications:")
         for i, med in enumerate(medications, 1):
