@@ -65,8 +65,8 @@ export const signUpAndVerifyEmail = async (email: string, password: string) => {
     await sendEmailVerification(userCredential.user);
     console.log("Verification email sent to", email);
     return userCredential.user;
-  } catch (error: any) {
-    console.error("Sign-up error:", error.message);
+  } catch (error) {
+    console.error(`signup error: ${error}`);
     throw error;
   }
 };
