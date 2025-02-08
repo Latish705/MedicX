@@ -1,5 +1,10 @@
 import * as admin from "firebase-admin";
 
+
+import dotenv from "dotenv";  
+
+dotenv.config();
+
 const FIREBASE_CREDENTIALS = process.env.FIREBASE_CREDENTIALS
   ? JSON.parse(process.env.FIREBASE_CREDENTIALS)
   : undefined;

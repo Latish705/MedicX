@@ -23,6 +23,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  aadhar: {
+    type: String,
+  },
+  phone: {
+    type: String,
+  },
+  age: {
+    type: Number,
+  },
+  
 });
 
 const User = mongoose.model<IUser>("User", userSchema);

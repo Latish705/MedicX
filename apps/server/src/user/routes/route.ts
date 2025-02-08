@@ -1,9 +1,9 @@
 import { Router } from "express";
+import { isFirstLogin } from "../controller/auth.controller";
+import verifyToken from "../../middleware/verifyGoogle";
 
 const userRouter = Router();
 
-userRouter.get("/", (req, res) => {
-  res.send("Hello User");
-});
+userRouter.get("/first_login",verifyToken, isFirstLogin);
 
 export default userRouter;
