@@ -88,7 +88,10 @@ export default function LandingPage() {
           <h2 className="text-3xl font-semibold text-gray-800 mb-6">Upload Your Prescription</h2>
           <div className="border-2 border-dashed border-gray-400 p-6 text-center rounded-lg cursor-pointer hover:border-blue-500 hover:shadow-2xl transition-all duration-300">
             <p className="text-gray-600 mb-4">Drag & drop your prescription here, or click to select</p>
-            {prescription && <p className="mt-4 text-blue-600">{prescription.name}</p>}
+            
+            {
+              //@ts-ignore
+            prescription && <p className="mt-4 text-blue-600">{prescription.name}</p>}
           </div>
         </div>
       </motion.section>

@@ -3,6 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation"; // Import next router for navigation
 
+interface message{
+    sender : string;
+    message: string;
+
+}
+
 export default function HomePage() {
   const [prescription, setPrescription] = useState(null);
   const [chatMessages, setChatMessages] = useState([]);
@@ -81,7 +87,9 @@ export default function HomePage() {
           >
             {/* <input {...getInputProps()} /> */}
             <p className="text-gray-600">Drag & drop your prescription here, or click to select</p>
-            {prescription && <p className="mt-4 text-blue-600">{prescription.name}</p>}
+            {
+                //@ts-ignore
+            prescription && <p className="mt-4 text-blue-600">{prescription.name}</p>}
           </div>
         </div>
 
@@ -89,7 +97,7 @@ export default function HomePage() {
         <div className="w-full md:w-1/2 bg-white p-8 rounded-lg shadow-lg border border-gray-200">
           <h2 className="text-2xl font-semibold mb-6 text-gray-800">Ask about Prescription</h2>
           <div className="flex flex-col h-[400px] border-2 border-gray-300 p-6 overflow-y-auto rounded-lg mb-6 bg-gray-50">
-            {chatMessages.map((msg, idx) => (
+            {chatMessages.map((msg:message, idx) => (
               <div
                 key={idx}
                 className={`p-4 mb-4 rounded-md ${
