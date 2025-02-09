@@ -94,6 +94,17 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+//get profile image
+export const getProfileImage = async () => {
+  const user = auth.currentUser;
+  if (user) {
+    console.log(user)
+    return user.photoURL;
+  } else {
+    console.log("No user signed in");
+  }
+};
+
 // Sign-out
 export const logout = async () => {
   try {

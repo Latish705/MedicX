@@ -97,7 +97,7 @@
 // pages/profile.tsx
 "use client";
 import { useEffect, useState } from "react";
-import { getCurrentUserToken } from "../../utils/firebase";
+import { getCurrentUserToken, getProfileImage } from "../../utils/firebase";
 import { BackendUrl } from "../../utils/constants";
 import axios from "axios";
 import Sidebar from "../components/sidebar";
@@ -118,7 +118,8 @@ const ProfilePage = () => {
             });
 
             console.log("API Response:", res.data); // Debugging log
-
+            
+            res.data.user.picture = await getProfileImage() // Set default profile picture
             setUser(res.data.user); // Set user details
             setError(null);
         } catch (err) {
@@ -174,7 +175,7 @@ const ProfilePage = () => {
                     <div className="flex items-center gap-6 mb-6">
                         <div className="w-32 h-32 rounded-full overflow-hidden shadow-lg border-4 border-white">
                             <img 
-                                src={user?.picture || "/default-profile.png"} 
+                                src={user?.picture} 
                                 alt={user?.name || "User"} 
                                 className="object-cover w-full h-full" 
                             />

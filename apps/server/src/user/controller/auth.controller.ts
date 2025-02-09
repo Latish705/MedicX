@@ -132,6 +132,7 @@ export const fillMedicalHistory = async (
       lifestyle,
       recent_issues,
     });
+
     await medicalHistory.save();
     res.status(201).json({
       success: true,

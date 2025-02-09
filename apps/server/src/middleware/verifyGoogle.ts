@@ -25,6 +25,7 @@ const verifyToken = async (
 
     // const existingUser = await User.find({googleId: decodedToken.uid});
     // const userRecord = User
+    console.log(existingUser);
     //@ts-ignore
     req.user = existingUser;
     next();

@@ -64,7 +64,7 @@ export default function UserForm() {
       console.log(formData  );
       const response = await axios.post(`${BackendUrl}/user/signup`, formData,{headers: {Authorization: `Bearer ${token}`},});
       console.log(response);
-      if(response.status === 200){
+      if(response.data.success){
         router.push("/medicalhistory");
       }
     }
