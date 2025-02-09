@@ -78,7 +78,7 @@ export default function LoginPage() {
                 }`}
               onClick={() => setActiveTab("startup")}
             >
-              Startup
+              Healthcare provider
             </button>
           </div>
 

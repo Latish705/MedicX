@@ -23,16 +23,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
-  aadhar: {
-    type: String,
+  prescription :{
+    type : mongoose.Schema.ObjectId,
+    
   },
-  phone: {
-    type: String,
-  },
-  age: {
-    type: Number,
-  },
-  
+  aadhar :{
+    type:String,
+    
+  }
 });
 
 const User = mongoose.model<IUser>("User", userSchema);
