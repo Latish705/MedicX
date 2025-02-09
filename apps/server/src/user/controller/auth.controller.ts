@@ -4,6 +4,7 @@ import MedicalHistory from "../models/medicalHistory";
 import User from "../models/userModel";
 import { Request, Response } from "express";
 import { uploadOnCloudinary } from "../../utils/cloudinary";
+import precriptionModel from "../models/prescriptionModel";
 
 export const isFirstLogin = async (
   req: Request,
@@ -51,12 +52,12 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
     const decodedToken = await admin.auth().verifyIdToken(token);
     console.log(decodedToken);
 
-    const { email, name, phone, age, aadhar } = req.body;
-    if (!email || !name || !phone || !age || !aadhar) {
+    const {  name, phone, age, aadhar } = req.body;
+    if ( !name || !phone || !age || !aadhar) {
       res.status(400).json({ success: false, message: "Missing fields" });
       return;
     }
-
+    const email = decodedToken.email
     const existingUser = await User.findOne({
       email,
     });
@@ -145,6 +146,10 @@ export const fillMedicalHistory = async (
 
 export const ocr = async (req: Request, res: Response): Promise<void> => {
   try {
+    // @ts-ignore
+    const user = req.user;
+    //@ts-ignore
+    const googleId = req.googleId;
     let prescriptionImage: any;
     // console.log(req.files);
 
@@ -173,9 +178,15 @@ export const ocr = async (req: Request, res: Response): Promise<void> => {
     const mlBackendUrl = process.env.ML_BACKEND_URL;
     console.log(mlBackendUrl);
 
+    
     await axios
       .post(`${mlBackendUrl}/ocr`, { image_url: uploadedImage?.url })
       .then((response) => {
+        const prescription = new precriptionModel({
+        userId: user._id,
+        url: uploadedImage?.url,
+        text: response.data.text,
+      })
         res.status(200).json({ success: true, data: response.data });
       })
       .catch((error) => {

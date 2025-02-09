@@ -37,6 +37,9 @@ const userSchema = new mongoose.Schema(
     age: {
       type: Number,
     },
+    googleId: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
