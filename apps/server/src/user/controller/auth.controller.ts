@@ -133,6 +133,7 @@ export const fillMedicalHistory = async (
       lifestyle,
       recent_issues,
     });
+
     await medicalHistory.save();
     res.status(201).json({
       success: true,
@@ -152,7 +153,6 @@ export const ocr = async (req: Request, res: Response): Promise<void> => {
     const googleId = req.googleId;
     let prescriptionImage: any;
     // console.log(req.files);
-
     if (req.files && "prescriptionImage" in req.files) {
       prescriptionImage = req.files.prescriptionImage[0].filename;
     } else {

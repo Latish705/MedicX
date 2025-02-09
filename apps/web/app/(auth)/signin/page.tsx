@@ -20,10 +20,10 @@ export default function LoginPage() {
         },
       });
       console.log(res.data);
-      if (res.data.firstTimeLogin) {
-        alert("First Time Login");
+      if (res.data.isFirstLogin) {
         router.push("/userform");
-      } else {
+      } 
+      else {
         router.push("/profile");
       }
     } catch (error) {

@@ -1,17 +1,22 @@
 "use client";
 
+import axios from "axios";
 import { useState } from "react";
+import { BackendUrl } from "../../utils/constants";
+import { getCurrentUserToken } from "../../utils/firebase";
+import { useRouter } from "next/navigation";
 
 export default function UserForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     phone: "",
     age: "",
     aadhar: "",
   });
 
   const [errors, setErrors] = useState({
-    username: "",
+    name: "",
     phone: "",
     age: "",
     aadhar: "",
@@ -19,10 +24,10 @@ export default function UserForm() {
 
   const validateForm = () => {
     let isValid = true;
-    let newErrors = { username: "", phone: "", age: "", aadhar: "" };
+    let newErrors = { name: "", phone: "", age: "", aadhar: "" };
 
-    if (formData.username.trim() === "") {
-      newErrors.username = "Username is required.";
+    if (formData.name.trim() === "") {
+      newErrors.name = "Username is required.";
       isValid = false;
     }
 
@@ -49,10 +54,19 @@ export default function UserForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      alert("Form submitted successfully!");
+      
+      // alert("Form submitted successfully!");
+
+      const token = await getCurrentUserToken();
+      console.log(formData  );
+      const response = await axios.post(`${BackendUrl}/user/signup`, formData,{headers: {Authorization: `Bearer ${token}`},});
+      console.log(response);
+      if(response.data.success){
+        router.push("/medicalhistory");
+      }
     }
   };
 
@@ -66,13 +80,13 @@ export default function UserForm() {
             <label className="block text-gray-700 font-medium">Username</label>
             <input
               type="text"
-              name="username"
-              value={formData.username}
+              name="name"
+              value={formData.name}
               onChange={handleChange}
               className="w-full mt-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your username"
             />
-            {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
+            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
           </div>
 
           {/* Phone Number */}
