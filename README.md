@@ -76,6 +76,8 @@ https://allenai.github.io/scispacy/
 5. Frontend - Nextjs
 6. 
 
-Live Deployment
+Documentations : 
+https://docs.google.com/document/d/1KsO0jbr0zupdO6jS0Glnl1vZzz4EwsOdRdfvCx7pA_U/edit?tab=t.0
 
+Live Deployment
 Web App: https://medinos-x-advitiya-25-coding-knights-web-8du8.vercel.app/
