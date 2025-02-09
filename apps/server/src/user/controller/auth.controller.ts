@@ -216,9 +216,10 @@ export const getAdvice = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    const medicalHistory = await MedicalHistory.findOne({ userId: user._id });
     const mlBackendUrl = process.env.ML_BACKEND_URL;
     axios
-      .post(`${mlBackendUrl}/assess_symptoms`, { symptoms })
+      .post(`${mlBackendUrl}/assess_symptoms`, { symptoms, medicalHistory, age: user.age })
       .then((response) => {
         res.status(200).json({ success: true, data: response.data });
       })

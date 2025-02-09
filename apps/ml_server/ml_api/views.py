@@ -164,22 +164,22 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 nlp = load_local_spacy_model('ml_api/en_core_sci_sm-0.5.4.tar.gz')
 
 # Define medical history
-medical_history = {
-    "age": 45,
-    "pre_existing_conditions": ["Type 2 Diabetes", "Hypertension"],
-    "allergies": ["Penicillin", "Aspirin"],
-    "medications": {
-        "Metformin": "500mg daily",
-        "Lisinopril": "10mg daily"
-    },
-    "past_surgeries": ["Appendectomy (2015)"],
-    "lifestyle": {
-        "smoking": False,
-        "alcohol": "Occasional",
-        "exercise": "Moderate"
-    },
-    "recent_issues": ["Seasonal allergies", "Occasional acid reflux"]
-}
+# medical_history = {
+#     "age": 45,
+#     "pre_existing_conditions": ["Type 2 Diabetes", "Hypertension"],
+#     "allergies": ["Penicillin", "Aspirin"],
+#     "medications": {
+#         "Metformin": "500mg daily",
+#         "Lisinopril": "10mg daily"
+#     },
+#     "past_surgeries": ["Appendectomy (2015)"],
+#     "lifestyle": {
+#         "smoking": False,
+#         "alcohol": "Occasional",
+#         "exercise": "Moderate"
+#     },
+#     "recent_issues": ["Seasonal allergies", "Occasional acid reflux"]
+# }
 
 # Function to sanitize user input
 def clean_text(text: str) -> str:
@@ -271,19 +271,43 @@ prompt = PromptTemplate.from_template(
 def assess_symptoms(request):
     if request.method == 'POST':
         try:
+            # Parse the incoming JSON payload
             payload = JSONParser().parse(request)
+            
+            # Extract symptoms and medical history
             symptoms = payload.get("symptoms")
+            medical_history = payload.get("medicalHistory")
+            if not medical_history:
+                return JsonResponse({"detail": "No medical history provided."}, status=400)
+            
+            # Validate the extracted data
             if not symptoms:
                 return JsonResponse({"detail": "No symptoms provided."}, status=400)
-
+            
+            # Optional: Clean the symptoms text
             cleaned_symptoms = clean_text(symptoms)
 
-            chain = prompt | llm
-            response = chain.invoke({"symptoms": cleaned_symptoms, "medical_history": json.dumps(medical_history)})
+            # Serialize medical history into JSON format
+            medical_history_json = json.dumps(medical_history)
 
+            # Print statements for debugging (can be removed in production)
+            print(f"Medical History: {medical_history}")
+            print(f"Symptoms: {cleaned_symptoms}")
+            
+            # Prepare the chain and invoke the model
+            chain = prompt | llm
+            response = chain.invoke({
+                "symptoms": cleaned_symptoms,
+                "medical_history": medical_history_json
+            })
+            
+            # Return the model's advice in the response
             return JsonResponse({"advice": response.content})
+        
         except Exception as e:
+            # Return detailed error information in case of failure
             return JsonResponse({"detail": str(e)}, status=500)
+
 
 ### Home View
 @api_view(['GET'])
