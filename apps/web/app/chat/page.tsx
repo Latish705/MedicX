@@ -1,11 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Import next router for navigation
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { BackendUrl } from "../../utils/constants";
+import { getCurrentUserToken } from "../../utils/firebase";
 
 export default function HomePage() {
-  const [prescription, setPrescription] = useState(null);
-  const router = useRouter(); // Initialize router for navigation
+  const [prescription, setPrescription] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const router = useRouter();
 
   // Dummy prescription data
   const medicalDetails = {
@@ -19,13 +23,39 @@ export default function HomePage() {
     router.push("/profile");
   };
 
+  // Handle file selection
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+    if (file) {
+      setPrescription(file);
+      setPreviewUrl(URL.createObjectURL(file)); // Generate preview URL
+    }
+  };
+
   // Handle the "Send" button click
-  const handleSend = () => {
-    if (prescription) {
-      //@ts-ignore
-      alert(`Prescription ${prescription.name} sent successfully!`);
-    } else {
+  const handleSend = async () => {
+    if (!prescription) {
       alert("Please upload a prescription first.");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("prescription", prescription);
+
+      const token = await getCurrentUserToken();  
+      const response = await axios.post(`${BackendUrl}/user/ocr`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("Response:", response.data);
+      alert(`Prescription "${prescription.name}" sent successfully!`);
+    } catch (error) {
+      console.error("Error uploading prescription:", error);
+      alert("Failed to upload prescription. Please try again.");
     }
   };
 
@@ -34,7 +64,6 @@ export default function HomePage() {
       {/* Header with Profile Icon */}
       <header className="bg-white text-gray-800 p-6 text-center font-semibold text-3xl shadow-lg flex justify-between items-center">
         <span>Prescription Upload & Details</span>
-        {/* Profile Icon */}
         <div
           onClick={navigateToProfile}
           className="cursor-pointer text-gray-600 hover:text-blue-600 transition-all duration-300"
@@ -60,13 +89,22 @@ export default function HomePage() {
         {/* Left Section - Prescription Upload */}
         <div className="w-full md:w-1/2 bg-white p-8 rounded-lg shadow-lg border border-gray-200">
           <h2 className="text-2xl font-semibold mb-6 text-gray-800">Upload Your Prescription</h2>
-          <div
-            className="border-2 border-dashed h-[80%] border-gray-300 p-8 text-center rounded-lg cursor-pointer hover:border-blue-500 transition-all duration-500"
-            onClick={() => alert("File upload or drag-and-drop logic goes here")}
-          >
-            <p className="text-gray-600">Drag & drop your prescription here, or click to select</p>
-            {prescription && (
-              <p className="mt-4 text-blue-600">{prescription.name}</p>
+          <div className="border-2 border-dashed h-[80%] border-gray-300 p-8 text-center rounded-lg cursor-pointer hover:border-blue-500 transition-all duration-500">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+              id="file-input"
+            />
+            <label htmlFor="file-input" className="cursor-pointer">
+              <p className="text-gray-600">Drag & drop your prescription here, or click to select</p>
+            </label>
+            {previewUrl && (
+              <div className="mt-4">
+                <img src={previewUrl} alt="Prescription Preview" className="w-32 h-32 object-cover rounded-md" />
+                <p className="mt-2 text-blue-600">{prescription?.name}</p>
+              </div>
             )}
           </div>
 
