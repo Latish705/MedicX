@@ -122,13 +122,11 @@ export const fillMedicalHistory = async (
       recent_issues,
     });
     await medicalHistory.save();
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: "Medical history saved",
-        userId: user._id,
-      });
+    res.status(201).json({
+      success: true,
+      message: "Medical history saved",
+      userId: user._id,
+    });
   } catch (error: any) {
     console.log(error);
   }
