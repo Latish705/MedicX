@@ -4,6 +4,21 @@ Welcome to the **MedinosXAdvitiya-25 Coding Knights** repository! This project l
 
 ---
 
+## 📌 Index
+
+- [🚀 Project Overview](#-project-overview)
+- [🌟 Key Features](#-key-features)
+- [🛠️ Tech Stack](#%EF%B8%8F-tech-stack)
+- [🏗️ Architecture Overview](#%EF%B8%8F-architecture-overview)
+- [🔧 Installation & Setup](#-installation--setup)
+- [🔑 API Endpoints](#-api-endpoints)
+- [📈 Future Enhancements](#-future-enhancements)
+- [📜 Documentation & Live Deployment](#-documentation--live-deployment)
+- [🤝 Contributors](#-contributors)
+- [📄 License](#-license)
+
+---
+
 ## 🚀 Project Overview
 
 MedinosXAdvitiya-25 integrates:
@@ -173,11 +188,12 @@ python manage.py runserver
 
 ## 🤝 Contributors
 
-- **Latish Adwani** (Lead Developer)
+- **Latish Adwani** 
+- **Vineet Chelani** 
+- **Yash Sharma** 
+- **karan Bhatia** 
+- **Soham Chaudhari** 
 - **Team Coding Knights**
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License.
