@@ -36,3 +36,4 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+apps/ml_server/ml_api/en_core_sci_scibert-0.5.4.tar.gz

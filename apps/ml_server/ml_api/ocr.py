@@ -59,8 +59,13 @@ def classify_text_image_with_tesseract(image_path, debug=False):
         print(f"Edge Density: {edge_density:.2f}")
     
     # Define thresholds for the new combined heuristic
+<<<<<<< HEAD
     solidity_threshold = 0.15
     stroke_width_threshold = 1.2
+=======
+    solidity_threshold = 0.3
+    stroke_width_threshold = 2.0
+>>>>>>> 808ca0c42e893979f7cc0c0a7c6ab6144c77f7f1
     edge_density_threshold = 0.15  # Adjust based on experiments
     
     # If edge density is high, favor digital text classification
