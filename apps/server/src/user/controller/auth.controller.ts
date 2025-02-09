@@ -51,12 +51,12 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
     const decodedToken = await admin.auth().verifyIdToken(token);
     console.log(decodedToken);
 
-    const { email, name, phone, age, aadhar } = req.body;
-    if (!email || !name || !phone || !age || !aadhar) {
+    const {  name, phone, age, aadhar } = req.body;
+    if ( !name || !phone || !age || !aadhar) {
       res.status(400).json({ success: false, message: "Missing fields" });
       return;
     }
-
+    const email = decodedToken.email
     const existingUser = await User.findOne({
       email,
     });
@@ -147,7 +147,6 @@ export const ocr = async (req: Request, res: Response): Promise<void> => {
   try {
     let prescriptionImage: any;
     // console.log(req.files);
-
     if (req.files && "prescriptionImage" in req.files) {
       prescriptionImage = req.files.prescriptionImage[0].filename;
     } else {
