@@ -8,8 +8,6 @@ Welcome to the **MedinosXAdvitiya-25 Coding Knights** repository! This project l
 
 - [🚀 Project Overview](#-project-overview)
 - [🌟 Key Features](#-key-features)
-  - [1️⃣ OCR-Based Prescription Processing](#1%EF%B8%8F-ocr-based-prescription-processing)
-  - [2️⃣ Symptom Assessment Chatbot](#2%EF%B8%8F-symptom-assessment-chatbot)
 - [🛠️ Tech Stack](#%EF%B8%8F-tech-stack)
 - [🏗️ Architecture Overview](#%EF%B8%8F-architecture-overview)
 - [🔧 Installation & Setup](#-installation--setup)
