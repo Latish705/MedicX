@@ -6,16 +6,16 @@ Welcome to the MedinosXAdvitiya-25 Coding Knights repository. This project lever
 
 ## 📌 Index
 
-- [🚀 Project Overview](#-project-overview)
-- [🌟 Key Features](#-key-features)
-- [🛠️ Tech Stack](#-tech-stack)
-- [🏗️ Architecture Overview](#-architecture-overview)
-- [🔧 Installation & Setup](#-installation--setup)
-- [🔑 API Endpoints](#-api-endpoints)
-- [📈 Future Enhancements](#-future-enhancements)
-- [📜 Documentation & Live Deployment](#-documentation--live-deployment)
-- [🤝 Contributors](#-contributors)
-- [📄 License](#-license)
+1. [🚀 Project Overview](#-project-overview)
+2. [🌟 Key Features](#-key-features)
+3. [🛠️ Tech Stack](#-tech-stack)
+4. [🏗️ Architecture Overview](#-architecture-overview)
+5. [🔧 Installation & Setup](#-installation--setup)
+6. [🔑 API Endpoints](#-api-endpoints)
+7. [📈 Future Enhancements](#-future-enhancements)
+8. [📜 Documentation & Live Deployment](#-documentation--live-deployment)
+9. [🤝 Contributors](#-contributors)
+10. [📄 License](#-license)
 
 ---
 
