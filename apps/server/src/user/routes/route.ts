@@ -8,11 +8,13 @@ import {
 } from "../controller/auth.controller";
 import verifyToken from "../../middleware/verifyGoogle";
 import upload from "../../utils/multer";
+import { getDetails } from "../controller/userDetails.controlelr";
 
 const userRouter = Router();
 
 userRouter.get("/first_login", verifyToken, isFirstLogin);
 userRouter.post("/signup", signup);
+userRouter.get("/getDetails", verifyToken, getDetails);
 userRouter.post("/fill_medical_history", verifyToken, fillMedicalHistory);
 
 userRouter.post(
