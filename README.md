@@ -188,11 +188,12 @@ python manage.py runserver
 
 ## 🤝 Contributors
 
-- **Latish Adwani** (Lead Developer)
+- **Latish Adwani** 
+- **Vineet Chelani** 
+- **Yash Sharma** 
+- **karan Bhatia** 
+- **Soham Chaudhari** 
 - **Team Coding Knights**
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License.
