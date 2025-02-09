@@ -14,7 +14,7 @@ const userRouter = Router();
 
 userRouter.get("/first_login", verifyToken, isFirstLogin);
 userRouter.post("/signup", signup);
-userRouter.get("/getDetails" ,getDetails)
+userRouter.get("/getDetails", verifyToken, getDetails);
 userRouter.post("/fill_medical_history", verifyToken, fillMedicalHistory);
 
 userRouter.post(
