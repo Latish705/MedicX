@@ -100,13 +100,13 @@ import { useEffect, useState } from "react";
 import { getCurrentUserToken } from "../../utils/firebase";
 import { BackendUrl } from "../../utils/constants";
 import axios from "axios";
-import Sidebar from "../components/sidebar"; // Import the Sidebar component
+import Sidebar from "../components/sidebar";
 
 const ProfilePage = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [user, setUser] = useState<any>(null); // State to store user details
-    const [loading, setLoading] = useState(true); // State for loading status
-    const [error, setError] = useState<string | null>(null); // State for error message
+    const [user, setUser] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     const getUserDetails = async () => {
         try {
@@ -116,7 +116,10 @@ const ProfilePage = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            setUser(res.data); // Assuming the API response contains user details
+
+            console.log("API Response:", res.data); // Debugging log
+
+            setUser(res.data.user); // Set user details
             setError(null);
         } catch (err) {
             console.error("Error fetching user details:", err);
@@ -170,21 +173,25 @@ const ProfilePage = () => {
                     {/* Profile Header */}
                     <div className="flex items-center gap-6 mb-6">
                         <div className="w-32 h-32 rounded-full overflow-hidden shadow-lg border-4 border-white">
-                            <img src={user.photoURL} alt={user.name} className="object-cover w-full h-full" />
+                            <img 
+                                src={user?.picture || "/default-profile.png"} 
+                                alt={user?.name || "User"} 
+                                className="object-cover w-full h-full" 
+                            />
                         </div>
                         <div>
-                            <h1 className="text-3xl font-semibold text-gray-800">{user.name}</h1>
-                            <p className="text-lg text-gray-500">{user.email}</p>
+                            <h1 className="text-3xl font-semibold text-gray-800">{user?.name}</h1>
+                            <p className="text-lg text-gray-500">{user?.email}</p>
                         </div>
                     </div>
 
                     {/* User Details Section */}
                     <div className="grid grid-cols-2 gap-6 text-lg text-gray-700">
-                        <p><span className="font-semibold text-gray-900">Email:</span> {user.email}</p>
-                        <p><span className="font-semibold text-gray-900">Age:</span> {user.age}</p>
-                        <p><span className="font-semibold text-gray-900">Phone No:</span> {user.phone}</p>
-                        <p><span className="font-semibold text-gray-900">Aadhaar ID:</span> {user.aadhaar}</p>
-                        <p><span className="font-semibold text-gray-900">Joined:</span> {user.joined}</p>
+                        <p><span className="font-semibold text-gray-900">Email:</span> {user?.email}</p>
+                        <p><span className="font-semibold text-gray-900">Age:</span> {user?.age || "N/A"}</p>
+                        <p><span className="font-semibold text-gray-900">Phone No:</span> {user?.phone || "N/A"}</p>
+                        <p><span className="font-semibold text-gray-900">Aadhaar ID:</span> {user?.aadhar || "N/A"}</p>
+                        <p><span className="font-semibold text-gray-900">Joined:</span> {new Date(user?.createdAt).toLocaleDateString()}</p>
                     </div>
                 </div>
 

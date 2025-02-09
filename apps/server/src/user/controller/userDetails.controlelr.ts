@@ -23,6 +23,7 @@
             }
 
             // Send user details in response
+            console.log("got user",user);
             res.status(200).json({ success: true, user });
             return;
 
