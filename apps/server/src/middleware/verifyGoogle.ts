@@ -20,7 +20,8 @@ const verifyToken = async (
     const existingUser = await User.findOne({ googleId: decodedToken.uid });
 
     // @ts-ignore
-    existingUser.googleId = decodedToken.uid;
+    req.googleId = decodedToken.uid;
+
     // const userRecord = User
     //@ts-ignore
     req.user = existingUser;
