@@ -2,7 +2,11 @@ import { Request, Response, NextFunction } from "express";
 import admin from "../utils/firebase";
 import User from "../user/models/userModel";
 
-const verifyToken = async (req: Request, res: Response, next: NextFunction):Promise<void> => {
+const verifyToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
@@ -11,12 +15,15 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction):Prom
     }
 
     const decodedToken = await admin.auth().verifyIdToken(token);
+    console.log(decodedToken);
 
+    const existingUser = await User.findOne({ googleId: decodedToken.uid });
 
-    const existingUser = await User.find({googleId: decodedToken.uid});
+    // @ts-ignore
+    existingUser.googleId = decodedToken.uid;
     // const userRecord = User
     //@ts-ignore
-    req.user = existingUser[0];
+    req.user = existingUser;
     next();
   } catch (error) {
     console.log(error);

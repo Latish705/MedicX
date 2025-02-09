@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'medinosxadvitiya-25-codingknights-1.onrender.com',
     'https://medinosxadvitiya-25-codingknights.onrender.com',
+    "127.0.0.1"
 ]
 
 
