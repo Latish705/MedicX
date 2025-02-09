@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -45,7 +44,6 @@ export default function HomePage() {
       });
 
       console.log("Response:", response);
-      alert("Prescription uploaded successfully!");
       setMedications(response.data.data.medications); // Assuming the medications are here
     } catch (error) {
       console.error("Error uploading prescription:", error);
@@ -78,33 +76,35 @@ export default function HomePage() {
         </div>
       </header>
 
-      <div className="flex flex-1 w-[80%] mx-auto p-8 gap-12">
-        {/* Left Section */}
-        <div className="w-full md:w-1/2 bg-white p-8 rounded-lg shadow-lg border border-gray-200">
-          <h2 className="text-2xl font-semibold mb-6 text-gray-800">
-            Upload Your Prescription
-          </h2>
-          <div className="border-2 border-dashed h-[80%] border-gray-300 p-8 text-center rounded-lg cursor-pointer hover:border-blue-500 transition-all duration-500">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="hidden"
-              id="file-input"
-            />
-            <label htmlFor="file-input" className="cursor-pointer">
-              <p className="text-gray-600">
-                Drag & drop your prescription here, or click to select
-              </p>
-            </label>
-            {previewUrl && (
-              <img
-                src={previewUrl}
-                alt="Prescription Preview"
-                className="mt-4 w-32 h-32 object-cover rounded-md"
-              />
-            )}
-          </div>
+        <div className="flex flex-1 w-[80%] mx-auto p-8 gap-12">
+          {/* Left Section */}
+          <div className="w-full md:w-1/2 bg-white p-8 rounded-lg shadow-lg border border-gray-200">
+            <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+              Upload Your Prescription
+            </h2>
+            <div
+    className="border-2 border-dashed h-[80%] border-gray-300 p-8 text-center rounded-lg cursor-pointer hover:border-blue-500 transition-all duration-500"
+    onClick={() => document.getElementById("file-input")?.click()}
+  >
+    <input
+      type="file"
+      accept="image/*"
+      onChange={handleFileChange}
+      className="hidden"
+      id="file-input"
+    />
+    <p className="text-gray-600">
+      Drag & drop your prescription here, or click to select
+    </p>
+    {previewUrl && (
+      <img
+        src={previewUrl}
+        alt="Prescription Preview"
+        className="mt-4 w-32 h-32 object-cover rounded-md"
+      />
+    )}
+  </div>
+
 
           <button
             onClick={handleSend}
@@ -121,20 +121,26 @@ export default function HomePage() {
           </h2>
           {loading ? (
             <p className="text-gray-600">Loading...</p>
-          ) : medications && medications.length > 0 ? (
-            <ul className="list-disc pl-6">
-              {medications.map((medication, index) => (
-                <li key={index} className="text-gray-700">
-                  <p>Name: {medication.name}</p>
-                  <p>Dosage: {medication.dosage}</p>
-                  <p>Frequency: {medication.frequency}</p>
-                  <p>Duration: {medication.duration}</p>
-                  <p>Instructions: {medication.instructions}</p>
-                </li>
-              ))}
-            </ul>
+          ) : prescription ? (
+            medications && medications.length > 0 ? (
+              <ul className="list-disc pl-6">
+                {medications.map((medication, index) => (
+                  <li key={index} className="text-gray-700">
+                    <p>Name: {medication.name}</p>
+                    <p>Dosage: {medication.dosage}</p>
+                    <p>Frequency: {medication.frequency}</p>
+                    <p>Duration: {medication.duration}</p>
+                    <p>Instructions: {medication.instructions}</p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-600">The prescription is handwritten.</p>
+            )
           ) : (
-            <p className="text-gray-600">The prescription is handwritten.</p>
+            <p className="text-gray-600">
+              Please upload a prescription to see its details.
+            </p>
           )}
         </div>
       </div>

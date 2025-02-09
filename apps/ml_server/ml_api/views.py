@@ -247,7 +247,7 @@ prompt = PromptTemplate.from_template(
     ### USER MEDICAL HISTORY:
     {medical_history}
     ### INSTRUCTION:
-    Analyze the given symptoms while considering the user's medical history. Keep responses **concise and structured**, ensuring readability. Include:
+    Analyze the given symptoms while considering the user's medical history. Keep responses **concise and structured**, ensuring readability. Include:give me in bullet points.
 
     1. **Advice:** A brief overview of possible causes and insight (limit to 2-3 sentences).
     2. **Home remedies:** Suggest **only the best** evidence-based remedies (max 2-3).

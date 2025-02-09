@@ -4,9 +4,12 @@ import Sidebar from "../components/sidebar"; // Import Sidebar component
 import { getCurrentUserToken } from "../../utils/firebase";
 import axios from "axios";
 import { BackendUrl } from "../../utils/constants";
+import ReactMarkdown from "react-markdown";
 
 const Chatbot = () => {
-  const [messages, setMessages] = useState<{ sender: string; text: string; isHTML?: boolean }[]>([]);
+  const [messages, setMessages] = useState<
+    { sender: string; text: string; isHTML?: boolean }[]
+  >([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -31,15 +34,26 @@ const Chatbot = () => {
           }
         );
 
-        if (response.data && response.data.data && response.data.data.advice) {
-          const botMessage = { sender: "bot", text: response.data.data.advice, isHTML: true };
+        if (
+          response.data &&
+          response.data.data &&
+          response.data.data.advice
+        ) {
+          const botMessage = {
+            sender: "bot",
+            text: response.data.data.advice,
+            isHTML: true,
+          };
           setMessages((prevMessages) => [...prevMessages, botMessage]);
         }
       } catch (error) {
         console.error("Error sending message:", error);
         setMessages((prevMessages) => [
           ...prevMessages,
-          { sender: "bot", text: "Sorry, something went wrong. Please try again." },
+          {
+            sender: "bot",
+            text: "Sorry, something went wrong. Please try again.",
+          },
         ]);
       } finally {
         setLoading(false);
@@ -69,7 +83,7 @@ const Chatbot = () => {
                 }`}
               >
                 {message.isHTML ? (
-                  <div dangerouslySetInnerHTML={{ __html: message.text }} />
+                  <ReactMarkdown>{message.text}</ReactMarkdown>
                 ) : (
                   message.text
                 )}
