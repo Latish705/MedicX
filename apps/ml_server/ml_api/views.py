@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # from django.shortcuts import render
 # from django.http import JsonResponse
 # from rest_framework.decorators import api_view
@@ -135,7 +133,6 @@
 # ----------------------------------------------------------------------------------------
 
 
->>>>>>> 808ca0c42e893979f7cc0c0a7c6ab6144c77f7f1
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
@@ -146,14 +143,6 @@ from rest_framework import status
 import os
 import re
 import requests
-<<<<<<< HEAD
-from pydantic import BaseModel
-from dotenv import load_dotenv
-# from ocr import classify_text_image_with_tesseract
-from ml_api.ocr import classify_text_image_with_tesseract
-
-from ml_api.test2 import extract_text, extract_medications, load_local_spacy_model
-=======
 from dotenv import load_dotenv
 from pydantic import BaseModel
 # from ocr import classify_text_image_with_tesseract
@@ -162,7 +151,6 @@ from ml_api.test2 import extract_text, extract_medications, load_local_spacy_mod
 from langchain_groq import ChatGroq
 from langchain_core.prompts import PromptTemplate
 import json
->>>>>>> 808ca0c42e893979f7cc0c0a7c6ab6144c77f7f1
 
 # Load environment variables
 load_dotenv()
@@ -178,10 +166,6 @@ nlp = load_local_spacy_model('ml_api/en_core_sci_sm-0.5.4.tar.gz')
 # Define medical history
 medical_history = {
     "age": 45,
-<<<<<<< HEAD
-
-=======
->>>>>>> 808ca0c42e893979f7cc0c0a7c6ab6144c77f7f1
     "pre_existing_conditions": ["Type 2 Diabetes", "Hypertension"],
     "allergies": ["Penicillin", "Aspirin"],
     "medications": {
@@ -204,22 +188,13 @@ def clean_text(text: str) -> str:
     text = re.sub(r"[^\w\s.,!?()-]", "", text)
     return text
 
-<<<<<<< HEAD
-
-### OCR Endpoint
-=======
 ### OCR Endpoint (No Changes)
->>>>>>> 808ca0c42e893979f7cc0c0a7c6ab6144c77f7f1
 @api_view(['POST'])
 def ocr(request):
     if request.method == 'POST':
         payload = JSONParser().parse(request)
         image_url = payload.get("image_url")
-<<<<<<< HEAD
-
-=======
         print(payload)
->>>>>>> 808ca0c42e893979f7cc0c0a7c6ab6144c77f7f1
         if not image_url:
             return JsonResponse({"detail": "No image URL provided."}, status=400)
 
@@ -247,11 +222,7 @@ def ocr(request):
             medications = extract_medications(raw_text, nlp)
             return JsonResponse({
                 "status": "processed",
-<<<<<<< HEAD
-                "raw_text": raw_text,
-=======
                 # "raw_text": raw_text,
->>>>>>> 808ca0c42e893979f7cc0c0a7c6ab6144c77f7f1
                 "medications": medications
             })
         else:
@@ -260,13 +231,6 @@ def ocr(request):
                 "message": "Unable to classify the prescription image."
             })
 
-<<<<<<< HEAD
-
-### Symptom Assessment Endpoint
-class SymptomInput(BaseModel):
-    symptoms: str
-
-=======
 ### Chatbot Endpoint (Updated from chatbot.py)
 # Initialize Groq API
 llm = ChatGroq(
@@ -302,7 +266,6 @@ prompt = PromptTemplate.from_template(
     ### RESPONSE (NO PREAMBLE):
     """
 )
->>>>>>> 808ca0c42e893979f7cc0c0a7c6ab6144c77f7f1
 
 @api_view(['POST'])
 def assess_symptoms(request):
@@ -310,29 +273,11 @@ def assess_symptoms(request):
         try:
             payload = JSONParser().parse(request)
             symptoms = payload.get("symptoms")
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> 808ca0c42e893979f7cc0c0a7c6ab6144c77f7f1
             if not symptoms:
                 return JsonResponse({"detail": "No symptoms provided."}, status=400)
 
             cleaned_symptoms = clean_text(symptoms)
 
-<<<<<<< HEAD
-            # Simulate LLM response (replace with real LLM API call)
-            advice = f"Simulated advice for symptoms: {cleaned_symptoms}"
-            response = {
-                "advice": advice,
-                "medical_history": medical_history
-            }
-            return JsonResponse(response)
-        except Exception as e:
-            return JsonResponse({"detail": str(e)}, status=500)
-
-
-=======
             chain = prompt | llm
             response = chain.invoke({"symptoms": cleaned_symptoms, "medical_history": json.dumps(medical_history)})
 
@@ -340,14 +285,9 @@ def assess_symptoms(request):
         except Exception as e:
             return JsonResponse({"detail": str(e)}, status=500)
 
->>>>>>> 808ca0c42e893979f7cc0c0a7c6ab6144c77f7f1
 ### Home View
 @api_view(['GET'])
 def home(request):
     return JsonResponse({
         "message": "Welcome to the Symptom Assessment API! Use /ocr for OCR or /assess_symptoms for medical guidance."
-<<<<<<< HEAD
     })
-=======
-    })
->>>>>>> 808ca0c42e893979f7cc0c0a7c6ab6144c77f7f1

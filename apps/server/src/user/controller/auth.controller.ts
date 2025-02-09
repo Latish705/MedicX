@@ -180,6 +180,7 @@ export const ocr = async (req: Request, res: Response): Promise<void> => {
       })
       .catch((error) => {
         // console.error("Error in ocr:", error);
+        console.log("ocr error",error);
         res
           .status(500)
           .json({ success: false, message: "Internal Server Error" });
