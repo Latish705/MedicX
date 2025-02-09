@@ -22,6 +22,7 @@ export default function HomePage() {
   // Handle the "Send" button click
   const handleSend = () => {
     if (prescription) {
+      //@ts-ignore
       alert(`Prescription ${prescription.name} sent successfully!`);
     } else {
       alert("Please upload a prescription first.");

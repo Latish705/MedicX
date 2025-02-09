@@ -2,20 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
-<<<<<<< HEAD
-"scripts": {
-  "start": "node dist/server.js",
-  "build": "tsc -b && node dist/index.js",
-  "dev": "nodemon"
-}
-,
-=======
   "scripts": {
     "start": "node dist/server.js",
     "build": "tsc -b && node dist/index.js",
     "dev": "nodemon src/index.ts"
   },
->>>>>>> 808ca0c42e893979f7cc0c0a7c6ab6144c77f7f1
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -35,10 +26,7 @@
     "form-data": "^4.0.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.0",
-<<<<<<< HEAD
-=======
     "multer": "^1.4.5-lts.1",
->>>>>>> 808ca0c42e893979f7cc0c0a7c6ab6144c77f7f1
     "server": "file:"
   },
   "devDependencies": {
