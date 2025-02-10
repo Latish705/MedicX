@@ -14,6 +14,12 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const token = await getCurrentUserToken();
+      if (token !== undefined) {
+        localStorage.setItem("token", token);
+      } else {
+        console.error("Token is undefined. Unable to store in localStorage.");
+      }
+
       const res = await axios.get(`${BackendUrl}/user/first_login`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -22,7 +28,7 @@ export default function LoginPage() {
       console.log(res.data);
       if (res.data.isFirstLogin) {
         router.push("/userform");
-      } 
+      }
       else {
         router.push("/profile");
       }
@@ -64,8 +70,8 @@ export default function LoginPage() {
           <div className="flex space-x-2 mb-6">
             <button
               className={`w-1/2 py-2 rounded-md font-medium transition ${activeTab === "user"
-                  ? "bg-blue-600 text-white shadow-md"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                ? "bg-blue-600 text-white shadow-md"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 }`}
               onClick={() => setActiveTab("user")}
             >
@@ -73,8 +79,8 @@ export default function LoginPage() {
             </button>
             <button
               className={`w-1/2 py-2 rounded-md font-medium transition ${activeTab === "startup"
-                  ? "bg-blue-600 text-white shadow-md"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                ? "bg-blue-600 text-white shadow-md"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 }`}
               onClick={() => setActiveTab("startup")}
             >

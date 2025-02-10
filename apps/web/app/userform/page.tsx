@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { BackendUrl } from "../../utils/constants";
-import { getCurrentUserToken } from "../../utils/firebase";
+// import { getCurrentUserToken } from "../../utils/firebase";
 import { useRouter } from "next/navigation";
 
 export default function UserForm() {
@@ -60,7 +60,8 @@ export default function UserForm() {
       
       // alert("Form submitted successfully!");
 
-      const token = await getCurrentUserToken();
+      // const token = await getCurrentUserToken();
+      const token = localStorage.getItem('token');
       console.log(formData  );
       const response = await axios.post(`${BackendUrl}/user/signup`, formData,{headers: {Authorization: `Bearer ${token}`},});
       console.log(response);

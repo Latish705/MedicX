@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { BackendUrl } from "../../utils/constants";
-import { getCurrentUserToken } from "../../utils/firebase";
+// import { getCurrentUserToken } from "../../utils/firebase";
 
 
 interface medication{
@@ -45,7 +45,8 @@ export default function HomePage() {
       const formData = new FormData();
       formData.append("prescriptionImage", prescription);
 
-      const token = await getCurrentUserToken();
+      const token = localStorage.getItem('token');
+      // const token = await getCurrentUserToken();
       const response = await axios.post(`${BackendUrl}/user/ocr`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,

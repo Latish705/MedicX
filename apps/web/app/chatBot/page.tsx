@@ -1,7 +1,7 @@
-"use client";
+"use client"
 import { useState } from "react";
 import Sidebar from "../components/sidebar"; // Import Sidebar component
-import { getCurrentUserToken } from "../../utils/firebase";
+// import { getCurrentUserToken } from "../../utils/firebase";
 import axios from "axios";
 import { BackendUrl } from "../../utils/constants";
 import ReactMarkdown from "react-markdown";
@@ -12,6 +12,7 @@ const Chatbot = () => {
   >([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true); // ✅ Fix: Add sidebar state
 
   const handleSend = async () => {
     if (input.trim()) {
@@ -21,7 +22,8 @@ const Chatbot = () => {
       setLoading(true);
 
       try {
-        const token = await getCurrentUserToken();
+        // const token = await getCurrentUserToken();
+        const token = localStorage.getItem("token");
 
         const response = await axios.post(
           `${BackendUrl}/user/symptoms`,
@@ -63,7 +65,8 @@ const Chatbot = () => {
 
   return (
     <div className="flex h-screen">
-      <Sidebar />
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
       <div className="flex-1 flex flex-col bg-gray-100 p-6">
         <h2 className="text-2xl font-semibold mb-4">Chatbot</h2>
 

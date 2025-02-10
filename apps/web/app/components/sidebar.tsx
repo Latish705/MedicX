@@ -25,7 +25,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean; setSid
                     <Link href={'/profile'} className="text-lg font-semibold">Profile</Link>
                 </li>
                 <li className="mb-6 p-3 hover:bg-white hover:text-blue-400 hover:rounded-xl text-center transition-all">
-                    <Link href={'/chatBot'} className="text-lg font-semibold">Chat Bot</Link>
+                    <Link href={'/chat'} className="text-lg font-semibold">Upload prescription</Link>
                 </li>
                 <li className="mb-6 p-3 hover:bg-white hover:text-blue-400 hover:rounded-xl text-center transition-all">
                     <Link href={'/prescription'} className="text-lg font-semibold">Prescriptions</Link>

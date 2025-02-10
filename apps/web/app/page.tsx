@@ -76,24 +76,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Prescription Upload Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-        className="flex justify-center py-12"
-      >
-        <div className="w-full md:w-2/3 bg-white p-8 rounded-lg shadow-xl border-2 border-dashed border-gray-300">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-6">Upload Your Prescription</h2>
-          <div className="border-2 border-dashed border-gray-400 p-6 text-center rounded-lg cursor-pointer hover:border-blue-500 hover:shadow-2xl transition-all duration-300">
-            <p className="text-gray-600 mb-4">Drag & drop your prescription here, or click to select</p>
-            
-            {
-              //@ts-ignore
-            prescription && <p className="mt-4 text-blue-600">{prescription.name}</p>}
-          </div>
-        </div>
-      </motion.section>
 
       {/* Testimonials Section */}
       <section className="bg-gray-200 py-12 text-center">
