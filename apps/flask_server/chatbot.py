@@ -1,12 +1,11 @@
 import os
 import re
+import json
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from langchain_groq import ChatGroq
 from langchain_core.prompts import PromptTemplate
 from dotenv import load_dotenv
-import json
-
 
 # Load environment variables
 load_dotenv()
@@ -36,7 +35,7 @@ app = FastAPI(title="Symptom Assessment API", version="1.0")
 # Initialize Groq API
 llm = ChatGroq(
     temperature=0,
-    groq_api_key=api_key,
+    groq_api_key="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",
     model_name="llama-3.1-8b-instant"
 )
 
@@ -47,51 +46,82 @@ class SymptomInput(BaseModel):
 # Function to sanitize user input
 def clean_text(text: str) -> str:
     """Remove unwanted characters and ensure proper formatting."""
-    text = text.strip()  # Remove leading/trailing whitespace
-    text = re.sub(r"[^\w\s.,!?()-]", "", text)  # Remove problematic characters except punctuation
+    text = text.strip()
+    text = re.sub(r"[^\w\s.,!?()-]", "", text)
     return text
 
-# Define Prompt
-prompt = PromptTemplate.from_template(
+# Define medical prompt
+medical_prompt = PromptTemplate.from_template(
     """
     ### SYMPTOMS:
     {symptoms}
     ### USER MEDICAL HISTORY:
     {medical_history}
     ### INSTRUCTION:
-    Analyze the given symptoms while considering the user's medical history. Keep responses **concise and structured**, ensuring readability. Include:
+    Analyze the symptoms based on the user's medical history. Keep responses concise and structured:
+    
+    1. *Possible Causes:* (2-3 sentences)
+    2. *Home Remedies:* (Top 2-3 recommendations)
+    3. *Doctor Visit:* (Is it necessary and why?)
+    4. *Avoid:* (2-3 key points)
+    5. *Actions:* (2-3 key points)
+    6. *OTC Medications:* (Most effective 2-3)
+    
+    Ensure the response is **empathetic, structured, and clear**.
+    """
+)
 
-    1. **Advice:** A brief overview of possible causes and insight (limit to 2-3 sentences).
-    2. **Home remedies:** Suggest **only the best** evidence-based remedies (max 2-3).
-    3. **Consultation recommendation:** Clearly state if a doctor visit is needed and **why** (if applicable).
-    4. **What to avoid:** Summarize key things to avoid (in 2-3 bullet points).
-    5. **What to do:** Provide **only the most important** actions (in 2-3 bullet points).
-    6. **Over-the-counter medications:** Mention **only the most effective** options (limit to 2-3).
+# Define general prompt
+general_prompt = PromptTemplate.from_template(
+    """
+    ### USER INPUT:
+    {query}
+    
+    ### INSTRUCTION:
+    Respond to the user in a **friendly and engaging** manner. Keep responses **concise and clear**.
+    
+    - If it’s a **greeting** (e.g., "hi", "hello"), reply with a warm greeting.
+    - If it’s a **general knowledge question**, provide a brief, direct answer.
+    - If it's **off-topic**, politely respond without medical advice.
+    
+    *Keep the tone conversational and positive!*
+    """
+)
 
-    **IMPORTANT:**
-    - Keep responses **short and to the point** (avoid unnecessary details).
-    - Use bullet points for clarity where applicable.
-    - Always be **empathetic** and reassuring.
-    - End with an **engaging follow-up question** to build trust (e.g., *"Does this sound helpful? Let me know if you need more details!"*).
-    - If the user asks a **general life question** (e.g., about the weather, technology, or random facts), answer it **directly** without giving medical advice.
-
-    ### RESPONSE (NO PREAMBLE):
+# Define classification prompt
+classification_prompt = PromptTemplate.from_template(
+    """
+    ### USER INPUT:
+    {query}
+    
+    ### INSTRUCTION:
+    Determine if the input is **medical-related** or **general**. Respond with either "medical" or "general" only.
     """
 )
 
 @app.post("/assess_symptoms")
 async def assess_symptoms(input_data: SymptomInput):
-    """API endpoint to analyze symptoms and provide medical guidance."""
+    """API endpoint to analyze symptoms and provide guidance."""
     try:
-        # Clean input to prevent JSON parsing errors
-        cleaned_symptoms = clean_text(input_data.symptoms)
-
-        chain = prompt | llm
-        response = chain.invoke({"symptoms": cleaned_symptoms, "medical_history": json.dumps(medical_history)})  
-        return {"advice": response.content}
+        cleaned_input = clean_text(input_data.symptoms)
+        
+        # Determine if the query is medical-related
+        classification_chain = classification_prompt | llm
+        classification_response = classification_chain.invoke({"query": cleaned_input})
+        category = classification_response.content.strip().lower()
+        
+        # Choose the appropriate prompt
+        if category == "medical":
+            chain = medical_prompt | llm
+            response = chain.invoke({"symptoms": cleaned_input, "medical_history": json.dumps(medical_history)})
+        else:
+            chain = general_prompt | llm
+            response = chain.invoke({"query": cleaned_input})
+        
+        return {"response": response.content}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/")
 def home():
-    return {"message": "Welcome to the Symptom Assessment API! Use /assess_symptoms to get medical guidance."}
+    return {"message": "Welcome to the Symptom Assessment API! Use /assess_symptoms to get guidance."}
