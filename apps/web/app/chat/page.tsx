@@ -5,11 +5,20 @@ import axios from "axios";
 import { BackendUrl } from "../../utils/constants";
 import { getCurrentUserToken } from "../../utils/firebase";
 
+
+interface medication{
+  name : string;
+  dosage:string;
+  frequency:string;
+  duration:string;
+  instructions:string
+
+}
 export default function HomePage() {
   const [prescription, setPrescription] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [medications, setMedications] = useState<string[] | null>(null); // New state for server data
+  const [medications, setMedications] = useState<medication[] | null>(null); // New state for server data
   const router = useRouter();
 
   const navigateToProfile = () => {
