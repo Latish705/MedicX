@@ -90,7 +90,7 @@ Additional tools and libraries are chosen to maximize performance and scalabilit
 
 ### **AI Models**
 - **OCR**: Utilizes a fine-tuned BERT model for accurate medical text extraction.
-- **Chatbot**: Powered by LangChain and Groq API with Llama 3.1-8B-Instant to ensure reliable symptom analysis.
+- **Chatbot**: Powered by LangChain and Groq API with llama-3.3-70b-versatile to ensure reliable symptom analysis.
 
 ---
 
@@ -196,11 +196,11 @@ python manage.py runserver
 
 ## 🤝 Contributors
 
+# **Team CodingKnights**
 - **Latish Adwani**
 - **Vineet Chelani**
 - **Yash Sharma**
 - **karan Bhatia**
 - **Soham Chaudhari**
-- **Team Coding Knights**
 
 ---
